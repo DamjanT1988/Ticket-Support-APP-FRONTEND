@@ -9,9 +9,13 @@ const STATUS_OPTIONS = ['Open', 'In Progress', 'Closed'];
 export default function TicketItem({ ticket, onUpdate }) {
   const [showComments, setShowComments] = useState(false);
 
-  const handleStatusChange = (e) => {
-    onUpdate(ticket.id, { status: e.target.value });
-  };
+ const handleStatusChange = (e) => {
+   onUpdate(ticket.id, {
+     title:       ticket.title,
+     description: ticket.description,
+     status:      e.target.value
+   });
+ };
 
   return (
     <div className="border rounded p-4 shadow-sm">
