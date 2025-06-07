@@ -12,6 +12,7 @@ Ett React-program för hantering av supportärenden, byggt för att integreras s
 - [Tillgängliga kommandon](#tillgängliga-kommandon)
 - [Tekniker](#tekniker)
 - [Tester](#tester)
+- [Designbeslut](#designbeslut)
 
 ## Demo
 > _Lägg till en länk eller skärmdump här om tillgänglig._
@@ -121,3 +122,9 @@ Alla tester ligger i `src/hooks` respektive `src/components` och körs med:
 ```bash
 npm test
 ```
+
+## Designbeslut
+- Jag valde att använda React Hooks och funktionella komponenter för att förenkla state-hantering och undvika komplexa klasskomponenter. Detta förbättrar läsbarheten, men kan kräva extra konfiguration för mer avancerade scenarion.
+- Tailwind CSS användes för att snabbt skapa en responsiv och konsekvent design utan att skriva mycket egen CSS. Detta påskyndar utvecklingen men kan ge mindre kontroll över exakt styling jämfört med handskriven CSS.
+- Jag fokuserade på en minimalistisk UI för att prioritera användarvänlighet och tydlighet. Funktionen för att redigera ticket-titel och beskrivning är implementerad i koden men är inte exponerad i gränssnittet för att hålla leveransen smidig.
+- Den modulära komponentstrukturen och användningen av hooks gör koden lätt att underhålla och utöka, även om inledande navigering mellan filer kan upplevas som lite komplex.
