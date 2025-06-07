@@ -13,6 +13,7 @@ Ett React-program för hantering av supportärenden, byggt för att integreras s
 - [Tekniker](#tekniker)
 - [Tester](#tester)
 - [Designbeslut](#designbeslut)
+- [Teststrategi](teststrategi)
 
 ## Demo
 > _Lägg till en länk eller skärmdump här om tillgänglig._
@@ -124,7 +125,17 @@ npm test
 ```
 
 ## Designbeslut
-- Jag valde att använda React Hooks och funktionella komponenter för att förenkla state-hantering och undvika komplexa klasskomponenter. Detta förbättrar läsbarheten, men kan kräva extra konfiguration för mer avancerade scenarion.
-- Tailwind CSS användes för att snabbt skapa en responsiv och konsekvent design utan att skriva mycket egen CSS. Detta påskyndar utvecklingen men kan ge mindre kontroll över exakt styling jämfört med handskriven CSS.
-- Jag fokuserade på en minimalistisk UI för att prioritera användarvänlighet och tydlighet. Funktionen för att redigera ticket-titel och beskrivning är implementerad i koden men är inte exponerad i gränssnittet för att hålla leveransen smidig.
-- Den modulära komponentstrukturen och användningen av hooks gör koden lätt att underhålla och utöka, även om inledande navigering mellan filer kan upplevas som lite komplex.
+- **Modulär komponentarkitektur**: Jag delade upp applikationen i små, återanvändbara funktionella komponenter (t.ex. `TicketList`, `TicketItem`, `TicketForm`, `CommentThread`). Detta gör det enklare att underhålla och testa isolerade delar av applikationen, men ökar antalet filer att navigera.
+- **Custom Hooks för API-interaktion**: `useTickets`-hooken abstraherar all logik för att hämta, skapa och uppdatera tickets. Detta ger enkel återanvändning och centraliserad felhantering, men innebär en extra nivå av indirection som kan vara onödig i enklare appar.
+- **State Management**: Jag undvek att introducera Redux eller andra externa state management-bibliotek för att hålla projektet lättviktigt. För större applikationer kan en global store vara att föredra för mer komplicerad delad state.
+- **Fel- och laddningshantering**: I hooks används `isLoading` och `error`-state för att hantera API-anropens status. Detta kräver några extra rader kod men förbättrar användarens feedback vid långsamma eller felaktiga nätverksförfrågningar.
+- **UI och stil**: Tailwind CSS valdes för snabb prototypning och enhetlig styling. Fördel: drar nytta av utility-classes för responsiv design. Nackdel: kan upplevas som mindre semantiskt än traditionell CSS och leder till långa klassnamn i JSX.
+- **Avgränsad redigeringsfunktion**: Även om möjligheten att redigera titel och beskrivning finns i `TicketForm`, exponerades inte denna UI för att prioritera leverans av kärnfunktionalitet inom tidsramen. Vid fler itererade versioner skulle jag lägga till en separat vy eller modal för redigering.
+
+## Teststrategi
+- **Enhetstester med Jest**: Varje Hook och komponent har tillhörande tester (`*.test.jsx`) som verifierar rendering, state-hantering och callback-anrop. Detta ger snabbt feedback vid kodändringar, men kan öka byggtiderna i CI-miljö.
+- **React Testing Library**: Används för att testa UI-komponenternas interaktioner på användarnivå (t.ex. att klicka på statusdropdown, skicka in formulär). Fokus på beteende framom implementation.
+- **API Mocking**: Med `msw` (Mock Service Worker) simuleras nätverksanrop i testerna. Detta ger realistiska HTTP-scenarion utan att träffa riktiga API:er, men kräver konfiguration av mock-servrar.
+- **Testtäckning**: Projektet inkluderar en `coverageThreshold` i `package.json` för att försäkra minst 80% täckning. Detta säkerställer att större delar av koden är testade, men kan leda till tester som fokuserar på kvantitet snarare än kvalitet.
+- **Integrationstester**: Kommentarstråden har integrationstester som verifierar flödet av att hämta kommentarer och lägga till nya. Dessa tester är tyngre men säkerställer att flera delar av systemet fungerar tillsammans.
+- **Kontinuerlig integration**: Tester är integrerade i GitHub Actions-workflowen, som körs vid varje PR. Säkerställer att inga regressionsfel introduceras, men kan öka feedback-loop-tiden vid större testsviter.
