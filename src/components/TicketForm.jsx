@@ -19,8 +19,9 @@ export default function TicketForm({ onSubmit, initial = {} }) {
   return (
     <form onSubmit={handle} className="border rounded p-4 shadow-sm">
       <div className="mb-2">
-        <label className="block text-sm">Title</label>
+        <label htmlFor="title" className="block text-sm">Title</label>
         <input
+            id="title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           className="w-full border rounded p-1"
@@ -28,8 +29,9 @@ export default function TicketForm({ onSubmit, initial = {} }) {
         />
       </div>
       <div className="mb-2">
-        <label className="block text-sm">Description</label>
+        <label htmlFor="description" className="block text-sm">Description</label>
         <textarea
+        id="description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           className="w-full border rounded p-1"

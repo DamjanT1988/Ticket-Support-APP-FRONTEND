@@ -9,6 +9,10 @@ describe('TicketItem', () => {
     const mockUpdate = jest.fn();
     render(<TicketItem ticket={ticket} onUpdate={mockUpdate} />);
     fireEvent.change(screen.getByDisplayValue('Open'), { target:{ value:'Closed' } });
-    expect(mockUpdate).toHaveBeenCalledWith(1, { status:'Closed' });
+    expect(mockUpdate).toHaveBeenCalledWith(1, {
+   title: 'T',
+   description: 'D',
+   status: 'Closed'
+ });
   });
 });
