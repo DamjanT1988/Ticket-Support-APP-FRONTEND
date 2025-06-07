@@ -1,6 +1,6 @@
 # Support Tickets Frontend
 
-Ett React-program för hantering av supportärenden, byggt för att integreras sömlöst med ett ASP .NET Core-backend. Innehåller funktioner för att skapa ärenden, filtrera efter status, sortera och visa/lägga till kommentarer.
+Ett React-program för hantering av supportärenden, byggt för att integreras sömlöst med ett ASP .NET Core-backend. Innehåller funktioner för att skapa ärenden, filtrera efter status, sortera och visa/lägga till kommentarer. Samt enhetstester.
 
 ## Innehåll
 - [Demo](#demo)
@@ -33,7 +33,7 @@ Ett React-program för hantering av supportärenden, byggt för att integreras s
 1. **Klona repot**  
    ```bash
    git clone <repository-url>
-   cd lagkassan-frontend
+   cd ticketsupportapp
    ```
 
 2. **Installera beroenden**  
@@ -104,6 +104,8 @@ I projektmappen kan du köra:
 - Axios
 - Tailwind CSS
 - http-proxy-middleware
+- JEST
+- React Testing Library
 - ASP .NET Core (backend)
 
 ## Tester

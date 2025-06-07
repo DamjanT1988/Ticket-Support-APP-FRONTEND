@@ -9,19 +9,25 @@ describe('TicketList', () => {
     { id: 2, title: 'B', description: '', status: 'Closed', createdAt: '2025-06-02T00:00:00Z', updatedAt: '', comments: [] }
   ];
   const onUpdate = jest.fn();
+  const setFilter = jest.fn();
 
-  it('visar alla tickets initialt och filtrerar när man väljer status', () => {
-    render(<TicketList tickets={tickets} onUpdate={onUpdate} />);
+  it('renderar alla tickets initialt och kallar setFilter vid statusändring', () => {
+    render(
+      <TicketList
+        tickets={tickets}
+        onUpdate={onUpdate}
+        filter="All"
+        setFilter={setFilter}
+      />
+    );
 
-    // Initialt ska både A och B synas (status All)
+    // Båda biljetterna syns initialt
     expect(screen.getByText('A')).toBeInTheDocument();
     expect(screen.getByText('B')).toBeInTheDocument();
 
-    // Filtrera på "Open" via aria‐label
-    fireEvent.change(screen.getByLabelText(/Status filter/i), { target: { value: 'Open' } });
-
-    // Efter filtrering ska bara A synas
-    expect(screen.getByText('A')).toBeInTheDocument();
-    expect(screen.queryByText('B')).toBeNull();
+    // Hitta alla comboboxar, använd den första som är status‐filtret
+    const combos = screen.getAllByRole('combobox');
+    fireEvent.change(combos[0], { target: { value: 'Open' } });
+    expect(setFilter).toHaveBeenCalledWith('Open');
   });
 });
