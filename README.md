@@ -11,6 +11,7 @@ Ett React-program för hantering av supportärenden, byggt för att integreras s
 - [Projektstruktur](#projektstruktur)
 - [Tillgängliga kommandon](#tillgängliga-kommandon)
 - [Tekniker](#tekniker)
+- [Tester](#tester)
 
 ## Demo
 > _Lägg till en länk eller skärmdump här om tillgänglig._
@@ -95,7 +96,7 @@ lagkassan-frontend/
 ## Tillgängliga kommandon
 I projektmappen kan du köra:
 - `npm start`: Startar appen i utvecklingsläge.
-- `npm test`: Startar testsviten.
+- `npm test`: Kör testsviten.
 - `npm run build`: Bygger appen för produktion.
 
 ## Tekniker
@@ -104,3 +105,17 @@ I projektmappen kan du köra:
 - Tailwind CSS
 - http-proxy-middleware
 - ASP .NET Core (backend)
+
+## Tester
+Projektet innehåller en komplett testsvit med Jest och React Testing Library:
+- **useTickets.test.js**: Verifierar att `useTickets`-hooken hämtar data initialt och vid filterändring.
+- **TicketForm.test.jsx**: Säkerställer att formuläret validerar fält och anropar `onSubmit` med korrekt payload.
+- **TicketItem.test.jsx**: Testar att statusändringar i enskilda ärenden skickas vidare via `onUpdate`.
+- **TicketList.test.jsx**: Kontrollerar filtrering och att rätt filter-funktion kallas vid statusändring.
+- **CommentThread.test.jsx**: Mockar API-anrop för att visa initiala kommentarer och lägga till nya.
+- **App.test.js**: Verifierar att huvudkomponenten renderar titeln `Support Tickets`.
+
+Alla tester ligger i `src/hooks` respektive `src/components` och körs med:
+```bash
+npm test
+```
